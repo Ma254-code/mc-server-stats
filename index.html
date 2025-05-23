@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minecraft Server Statistik</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #eee;
+    text-align: center;
+    padding: 2rem;
+  }
+  #status {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+
+<h1>Minecraft Server Statistik</h1>
+<div id="status">Lade Daten...</div>
+
+<script>
+async function fetchStatus() {
+  try {
+    const res = await fetch("https://https://workspace.marlonalbrechtl.repl.co/latest");
+    if (!res.ok) throw new Error("Server antwortet nicht");
+    const data = await res.json();
+    document.getElementById("status").innerText =
+      `Online: ${data.online} / ${data.max} Spieler\n` +
+      `Letzter Ping: ${new Date(data.timestamp).toLocaleString()}\n` +
+      `Spieler: ${data.players.length > 0 ? data.players.join(", ") : "Keine Spieler online"}`;
+  } catch (err) {
+    document.getElementById("status").innerText = "Fehler beim Laden der Daten.";
+    console.error(err);
+  }
+}
+
+fetchStatus();
+setInterval(fetchStatus, 120000); // alle 2 Minuten aktualisieren
+</script>
+
+</body>
+</html>

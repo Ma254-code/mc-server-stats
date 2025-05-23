@@ -27,7 +27,7 @@
 <script>
 async function fetchStatus() {
   try {
-    const res = await fetch("https://https://workspace.marlonalbrechtl.repl.co/latest");
+    const res = await fetch("https://workspace.marlonalbrechtl.repl.co/latest");
     if (!res.ok) throw new Error("Server antwortet nicht");
     const data = await res.json();
     document.getElementById("status").innerText =
